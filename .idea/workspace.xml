@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6e740d39-e98f-461c-ac8b-a86f65210005" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>石大</find>
+      <find>电话</find>
+      <find>审核状态</find>
+      <find>待审核</find>
+      <find>进度</find>
+      <find>用户名称</find>
+      <find>View</find>
+      <find>senior</find>
+      <find>$search</find>
+      <find>审核</find>
+      <find>activity</find>
+      <find>任务审核</find>
+      <find>checkList</find>
+      <find>批量审核</find>
+      <find>通知</find>
+      <find>checkTask</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+    <dirStrings>
+      <dir>D:\phpstudy\PHPTutorial\WWW\spmdmaster</dir>
+      <dir>D:\phpstudy\PHPTutorial\WWW\spmdmaster\App</dir>
+      <dir>D:\phpstudy\PHPTutorial\WWW\spmdmaster\App\Modules</dir>
+      <dir>D:\phpstudy\PHPTutorial\WWW\spmdmaster\App\Modules\Admin\Tpl\Check</dir>
+      <dir>D:\phpstudy\PHPTutorial\WWW\spmdmaster\App\Modules\Admin\Tpl</dir>
+    </dirStrings>
+  </component>
+  <component name="PhpServers">
+    <servers>
+      <server host="localhost" id="3d0aabb0-a728-4be4-b2e3-fc81ceb74225" name="spmd" />
+    </servers>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectId" id="1TbOr6PZX8fayByGv1xZSMrYH4o" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalDependencies" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="spmd" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="spmd">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6e740d39-e98f-461c-ac8b-a86f65210005" name="Default Changelist" comment="" />
+      <created>1566278331839</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1566278331839</updated>
+      <workItem from="1566278333368" duration="2758000" />
+      <workItem from="1572351302067" duration="6144000" />
+      <workItem from="1572438519392" duration="1005000" />
+      <workItem from="1572611370774" duration="1666000" />
+      <workItem from="1572846102684" duration="17150000" />
+      <workItem from="1572920082499" duration="2517000" />
+      <workItem from="1573359655486" duration="4097000" />
+      <workItem from="1573725539713" duration="250000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>

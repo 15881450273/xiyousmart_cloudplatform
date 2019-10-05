@@ -1,0 +1,314 @@
+@charset "utf-8";
+/* dialog样式 */
+.wrapper {
+    zoom: 1;
+    width: 630px;
+    *width: 626px;
+    height: 380px;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    font-family: sans-serif;
+}
+
+/*tab样式框大小*/
+.tabhead {
+    float:left;
+}
+.tabbody {
+    width: 100%;
+    height: 346px;
+    position: relative;
+    clear: both;
+}
+
+.tabbody .panel {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: #fff;
+    overflow: hidden;
+    display: none;
+}
+
+.tabbody .panel.focus {
+    width: 100%;
+    height: 346px;
+    display: block;
+}
+
+/* 上传附件 */
+.tabbody #upload.panel {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    background: #fff;
+    display: block;
+}
+
+.tabbody #upload.panel.focus {
+    width: 100%;
+    height: 346px;
+    display: block;
+    clip: auto;
+}
+
+#upload .queueList {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+
+#upload p {
+    margin: 0;
+}
+
+.element-invisible {
+    width: 0 !important;
+    height: 0 !important;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+#upload .placeholder {
+    margin: 10px;
+    border: 2px dashed #e6e6e6;
+    *border: 0px dashed #e6e6e6;
+    height: 172px;
+    padding-top: 150px;
+    text-align: center;
+    background: url(images/image.png) center 70px no-repeat;
+    color: #cccccc;
+    font-size: 18px;
+    position: relative;
+    top:0;
+    *top: 10px;
+}
+
+#upload .placeholder .webuploader-pick {
+    font-size: 18px;
+    background: #00b7ee;
+    border-radius: 3px;
+    line-height: 44px;
+    padding: 0 30px;
+    *width: 120px;
+    color: #fff;
+    display: inline-block;
+    margin: 0 auto 20px auto;
+    cursor: pointer;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+#upload .placeholder .webuploader-pick-hover {
+    background: #00a2d4;
+}
+
+
+#filePickerContainer {
+    text-align: center;
+}
+
+#upload .placeholder .flashTip {
+    color: #666666;
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+}
+
+#upload .placeholder .flashTip a {
+    color: #0785d1;
+    text-decoration: none;
+}
+
+#upload .placeholder .flashTip a:hover {
+    text-decoration: underline;
+}
+
+#upload .placeholder.webuploader-dnd-over {
+    border-color: #999999;
+}
+
+#upload .filelist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    height: 300px;
+}
+
+#upload .filelist:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+
+#upload .filelist li {
+    width: 113px;
+    height: 113px;
+    background: url(images/bg.png);
+    text-align: center;
+    margin: 9px 0 0 9px;
+    *margin: 6px 0 0 6px;
+    position: relative;
+    display: block;
+    float: left;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+#upload .filelist li p.log {
+    position: relative;
+    top: -45px;
+}
+
+#upload .filelist li p.title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    top: 5px;
+    text-indent: 5px;
+    text-align: left;
+}
+
+#upload .filelist li p.progress {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    overflow: hidden;
+    z-index: 50;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+    -webkit-box-shadow: 0 0 0;
+}
+
+#upload .filelist li p.progress span {
+    display: none;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    background: #1483d8 url(images/progress.png) repeat-x;
+
+    -webit-transition: width 200ms linear;
+    -moz-transition: width 200ms linear;
+    -o-transition: width 200ms linear;
+    -ms-transition: width 200ms linear;
+    transition: width 200ms linear;
+
+    -webkit-animation: progressmove 2s linear infinite;
+    -moz-animation: progressmove 2s linear infinite;
+    -o-animation: progressmove 2s linear infinite;
+    -ms-animation: progressmove 2s linear infinite;
+    animation: progressmove 2s linear infinite;
+
+    -webkit-transform: translateZ(0);
+}
+
+@-webkit-keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+@-moz-keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+@keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+#upload .filelist li p.imgWrap {
+    position: relative;
+    z-index: 2;
+    line-height: 113px;
+    vertical-align: middle;
+    overflow: hidden;
+    width: 113px;
+    height: 113px;
+
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+
+    -webit-transition: 200ms ease-out;
+    -moz-transition: 200ms ease-out;
+    -o-transition: 200ms ease-out;
+    -ms-transition: 200ms ease-out;
+    transition: 200ms ease-out;
+}
+#upload .filelist li p.imgWrap.notimage {
+    margin-top: 0;
+    width: 111px;
+    height: 111px;
+    border: 1px #eeeeee solid;
+}
+#upload .filelist li p.imgWrap.notimage i.file-preview {
+    margin-top: 15px;
+}
+
+#upload .filelist li img {
+    width: 100%;
+}
+
+#upload .filelist li p.error {
+    background: #f43838;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 28px;
+    line-height: 28px;
+    width: 100%;
+    z-index: 100;
+    display:none;
+}
+
+#upload .filelist li .success {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    z-index: 200;
+    background: url(images/success.png) no-repeat right bottom;
+    background-image: url(images/success.gif) \9;
+}
+
