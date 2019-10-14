@@ -153,4 +153,70 @@ function classAccess($class){ //参数class可以为class数组或者直接为cl
 		return $ma;
 }
 
+//邮件发送
+function sendMail($to, $subject, $content){
+	vendor("PHPMailer.PHPMailerAutoload");
+	$mail = new PHPMailer();
+    // 装配邮件服务器
+    if (C('MAIL_SMTP')) {
+        $mail->IsSMTP();
+    }
+
+    Config();//使数据库中配置生效
+    
+	$mail->Host = C('MAIL_HOST');
+    $mail->SMTPAuth = C('MAIL_SMTPAUTH');
+    $mail->Port = C('MAIL_PORT');
+    $mail->Username = C('MAIL_USERNAME');
+    $mail->Password =  C('MAIL_PASSWORD');
+    $mail->SMTPSecure = C('MAIL_SECURE');
+    $mail->CharSet = C('MAIL_CHARSET');
+    // 装配邮件头信息
+    $mail->From =  C('MAIL_USERNAME');
+    $mail->AddAddress($to);
+    $mail->FromName = 'SWPU计算机科学学院党员发展评估系统';
+    $mail->IsHTML(C('MAIL_ISHTML'));
+    // 装配邮件正文信息
+    $mail->Subject = $subject;
+    $mail->Body = $content;
+    // 发送邮件
+    if (!$mail->Send()) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}
+
+//系统配置函数
+function Config($name,$value,$title){
+	//p($value);die;
+	$config = M('config')->select();
+	$conf = array();
+	foreach ($config as $k => $v) {
+		$conf[$v['name']] = $v['value'];
+	}
+	if($name == null){ //没有参数直接返回整个配置
+		$sysconfig = array_change_key_case($conf, CASE_UPPER);
+		C($sysconfig);
+		return $conf;
+	}else if($value==null){ //如果有name参数，返回对应值
+		C(strtoupper($name),$conf[$name]);
+		return $conf[$name];
+	}else{    //如果name、value 有值为写入
+		//p($conf[$name]);die;
+		if(array_key_exists($name,$conf)) 
+		  return M('config')->where(array('name'=>$name))->save(array('value'=>$value,'title'=>$title));
+		else return M('config')->add(array('name'=>$name,'value'=>$value,'title'=>$title));
+	}
+
+}
+
+//验证码生成器
+function randCode(){
+  $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()+-';
+  $random = $chars[mt_rand(0,73)].$chars[mt_rand(0,73)].$chars[mt_rand(0,73)].$chars[
+mt_rand(0,73)].$chars[mt_rand(0,73)];//Random 5 times
+  $content = uniqid().$random;  // 类似 5443e09c27bf4aB4uT
+  return md5($content); 
+}
 ?>

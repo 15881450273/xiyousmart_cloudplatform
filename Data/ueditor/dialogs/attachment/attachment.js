@@ -1,4 +1,5 @@
 
+
 (function () {
 
     var uploadFile,
@@ -407,6 +408,168 @@
                 }
 
             }
+
+            function updateStatus() {
+                var text = '', stats;
+
+                if (state === 'ready') {
+                    text = lang.updateStatusReady.replace('_', fileCount).replace('_KB', WebUploader.formatSize(fileSize));
+                } else if (state === 'confirm') {
+                    stats = uploader.getStats();
+                    if (stats.uploadFailNum) {
+                        text = lang.updateStatusConfirm.replace('_', stats.successNum).replace('_', stats.successNum);
+                    }
+                } else {
+                    stats = uploader.getStats();
+                    text = lang.updateStatusFinish.replace('_', fileCount).
+                        replace('_KB', WebUploader.formatSize(fileSize)).
+                        replace('_', stats.successNum);
+
+                    if (stats.uploadFailNum) {
+                        text += lang.updateStatusError.replace('_', stats.uploadFailNum);
+                    }
+                }
+
+                $info.html(text);
+            }
+
+            uploader.on('fileQueued', function (file) {
+                fileCount++;
+                fileSize += file.size;
+
+                if (fileCount === 1) {
+                    $placeHolder.addClass('element-invisible');
+                    $statusBar.show();
+                }
+
+                addFile(file);
+            });
+
+            uploader.on('fileDequeued', function (file) {
+                fileCount--;
+                fileSize -= file.size;
+
+                removeFile(file);
+                updateTotalProgress();
+            });
+
+            uploader.on('filesQueued', function (file) {
+                if (!uploader.isInProgress() && (state == 'pedding' || state == 'finish' || state == 'confirm' || state == 'ready')) {
+                    setState('ready');
+                }
+                updateTotalProgress();
+            });
+
+            uploader.on('all', function (type, files) {
+                switch (type) {
+                    case 'uploadFinished':
+                        setState('confirm', files);
+                        break;
+                    case 'startUpload':
+                        /* 添加额外的GET参数 */
+                        var params = utils.serializeParam(editor.queryCommandValue('serverparam')) || '',
+                            url = utils.formatUrl(actionUrl + (actionUrl.indexOf('?') == -1 ? '?':'&') + 'encode=utf-8&' + params);
+                        uploader.option('server', url);
+                        setState('uploading', files);
+                        break;
+                    case 'stopUpload':
+                        setState('paused', files);
+                        break;
+                }
+            });
+
+            uploader.on('uploadBeforeSend', function (file, data, header) {
+                //这里可以通过data对象添加POST参数
+                header['X_Requested_With'] = 'XMLHttpRequest';
+            });
+
+            uploader.on('uploadProgress', function (file, percentage) {
+                var $li = $('#' + file.id),
+                    $percent = $li.find('.progress span');
+
+                $percent.css('width', percentage * 100 + '%');
+                percentages[ file.id ][ 1 ] = percentage;
+                updateTotalProgress();
+            });
+
+            uploader.on('uploadSuccess', function (file, ret) {
+                var $file = $('#' + file.id);
+                try {
+                    var responseText = (ret._raw || ret),
+                        json = utils.str2json(responseText);
+                    if (json.state == 'SUCCESS') {
+                        _this.fileList.push(json);
+                        $file.append('<span class="success"></span>');
+                    } else {
+                        $file.find('.error').text(json.state).show();
+                    }
+                } catch (e) {
+                    $file.find('.error').text(lang.errorServerUpload).show();
+                }
+            });
+
+            uploader.on('uploadError', function (file, code) {
+            });
+            uploader.on('error', function (code, file) {
+                if (code == 'Q_TYPE_DENIED' || code == 'F_EXCEED_SIZE') {
+                    addFile(file);
+                }
+            });
+            uploader.on('uploadComplete', function (file, ret) {
+            });
+
+            $upload.on('click', function () {
+                if ($(this).hasClass('disabled')) {
+                    return false;
+                }
+
+                if (state === 'ready') {
+                    uploader.upload();
+                } else if (state === 'paused') {
+                    uploader.upload();
+                } else if (state === 'uploading') {
+                    uploader.stop();
+                }
+            });
+
+            $upload.addClass('state-' + state);
+            updateTotalProgress();
+        },
+        getQueueCount: function () {
+            var file, i, status, readyFile = 0, files = this.uploader.getFiles();
+            for (i = 0; file = files[i++]; ) {
+                status = file.getStatus();
+                if (status == 'queued' || status == 'uploading' || status == 'progress') readyFile++;
+            }
+            return readyFile;
+        },
+        getInsertList: function () {
+            var i, link, data, list = [],
+                prefix = editor.getOpt('fileUrlPrefix');
+            for (i = 0; i < this.fileList.length; i++) {
+                data = this.fileList[i];
+                link = data.url;
+                list.push({
+                    title: data.original || link.substr(link.lastIndexOf('/') + 1),
+                    url: prefix + link
+                });
+            }
+            return list;
+        }
+    };
+
+
+    /* 在线附件 */
+    function OnlineFile(target) {
+        this.container = utils.isString(target) ? document.getElementById(target) : target;
+        this.init();
+    }
+    OnlineFile.prototype = {
+        init: function () {
+            this.initContainer();
+            this.initEvents();
+            this.initData();
+        },
 
     };
 
