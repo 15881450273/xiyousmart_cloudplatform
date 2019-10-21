@@ -1,0 +1,28 @@
+<?php if (!defined('THINK_PATH')) exit();?><html>
+    <head>
+        
+    </head>
+    <body>
+    <p>
+    <br/>
+</p>
+<p>
+    请按照实例表格的格式进行编辑之后，再进行导入操作。<span style="color: rgb(255, 0, 0);">注意，格式错误会导致上传失败，甚至数据混乱。</span><br/>
+</p>
+<p>
+    <br/>
+</p>
+<p>
+    文件下载：<a target="_self" href="__ROOT__/Data/static/doc/学习相关.xls">学习相关.xls</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://img.baidu.com/hi/tsj/t_0026.gif"/>
+</p>
+    
+        <form action="<?php echo U('Admin/Assess/importHandle');?>" method="post" enctype="multipart/form-data">
+            <input type="file" name="import"/>
+            <input type="hidden" name="type" value="1"/>
+            <input type="submit" value="导入"/>
+        </form>
+        <br/><br/>
+        <P><a href="<?php echo U('Index/expUser');?>" >导出数据并生成excel</a></P><br/>
+    </body>
+    
+ </html>

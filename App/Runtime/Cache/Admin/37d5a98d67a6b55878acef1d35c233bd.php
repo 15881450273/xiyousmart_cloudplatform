@@ -1,0 +1,207 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap3/css/bootstrap-theme.min.css" />
+     <!--jquery资源引入-->
+  <script type="text/javascript" src="__PUBLIC__/lib/jquery-1.8.1.min.js"></script>
+  <!--弹出对话框-->
+    <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
+    <script src="__PUBLIC__/artDialog/dist/dialog-plus.js"></script>
+    <!-- 表单体交 -->
+    <script type="text/javascript" src="__PUBLIC__/lib/jquery.form.js"></script>
+    <style>
+    .wrap{
+    	width:700px;
+    	margin: 0 auto;
+      margin-top: 20px;
+
+    }
+    </style>
+</head>
+<body>
+<div class="wrap">
+<form class="form-horizontal" id='sysConfig' action="<?php echo U('Admin/Rbac/sysConfHandle');?>" method="post">
+<!-- ——————————————————通用设置—————————————————————— -->
+<div class="panel panel-primary">
+<div class="panel-heading">通用设置</div>
+  <div class="panel-body">
+  <div class="form-group">
+      <label for="checkemail" class="col-sm-3 control-label">注册时验证邮箱</label>
+      <div class="col-sm-9">
+          <div class="checkbox">
+          <label>
+            <input type="checkbox" <?php if($checkemail == 1): ?>checked="checked"<?php endif; ?>  name="checkemail"/>
+            (选中为注册时验证邮箱，反之不验证)
+          </label>
+          </div>
+      </div>
+    </div>
+  <div class="form-group" id="basedsystime">
+      <label for="basedsystime" class="col-sm-3 control-label">当前可用年级</label>
+      <div class="col-sm-9">
+          <div class="checkbox">
+          <label>
+            <input type="checkbox" <?php if($basedsystime == 1): ?>checked="checked"<?php endif; ?>  name="basedsystime"/>
+            (选中为采用系统时间判断，不选则采用手动设置)
+          </label>
+          </div>
+      </div>
+    </div>
+    <div id="freshman" class="form-group <?php if($basedsystime == 1): ?>hidden<?php endif; ?>">
+      <label for="freshman" class="col-sm-3 control-label">新生入学时间</label>
+      <div class="col-sm-3">
+          <select class="form-control" name="freshman">
+          <?php if(is_array($year)): foreach($year as $key=>$v): ?><option <?php if($v == $freshman): ?>selected="selected"<?php endif; ?>><?php echo ($v); ?></option><?php endforeach; endif; ?>
+          </select>
+      </div>
+       <div class="col-sm-4">(当前大一学生的入学时间)</div>
+    </div>
+    
+    
+  </div>
+</div>
+
+<!-- ——————————————————SMTP邮件设置—————————————————————— -->
+<div class="panel panel-primary">
+<div class="panel-heading">SMTP邮件设置</div>
+  <div class="panel-body">
+  
+    <div class="form-group">
+      <label for="mail_host" class="col-sm-3 control-label">SMTP邮件服务器地址</label>
+      <div class="col-sm-9">
+        <input type="text" name="mail_host" class="form-control" id="mail_host" placeholder="请输入smtp邮件服务器地址" value="<?php echo ($mail_host); ?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mail_port" class="col-sm-3 control-label">SMTP邮件服务器端口</label>
+      <div class="col-sm-9">
+        <input type="text" name="mail_port" class="form-control" id="mail_port" placeholder="请输入smtp邮件服务器端口"  value="<?php echo ($mail_port); ?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mail_username" class="col-sm-3 control-label">邮箱用户名</label>
+      <div class="col-sm-9">
+        <input type="email" name="mail_username"  class="form-control" id="mail_username" placeholder="请输入邮箱用户名"  value="<?php echo ($mail_username); ?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mail_password" class="col-sm-3 control-label">邮箱密码</label>
+      <div class="col-sm-9">
+        <input type="password" name="mail_password" class="form-control" id="mail_password" placeholder="请输入邮件密码"  value="<?php echo ($mail_password); ?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mail_test" class="col-sm-3 control-label">测试收件箱</label>
+      <div class="col-sm-9">
+        <input type="email" name="mail_test"  class="form-control" id="mail_test" placeholder="请输入接受测试邮件邮箱地址">
+      </div>
+    </div>
+  </div>
+</div>
+ <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-9">
+          <div class="col-md-1">
+        <button id="saveconf" type="submit" class="btn btn-default">保存</button>
+        </div>
+          <div class="col-md-1 col-md-offset-2">
+            <a id="testemail"  class="btn btn-primary">发送测试邮件</a>
+          </div>
+        
+      </div>
+
+    </div>
+ </form>
+</div>
+<script>
+   $(document).ready(function(){
+    //通用配置
+    $("[name='basedsystime']").change(function(){
+      if($(this).attr('checked')=='checked') $("#freshman").addClass("hidden");
+      else $("#freshman").removeClass("hidden");
+    });
+
+    //邮箱配置
+   	  $("#sysConfig").submit(function(){
+   	  	         //正在保存对话框
+   	  	         var dosave = dialog({
+                                content: '正在保存，请稍等下啊-)'
+                            });
+                      dosave.show();
+                var options = {
+                    target : '#output1',
+                    dataType : 'json',
+                    data : {'type':'saveconf'},
+                    success:function(data){
+                    	dosave.close().remove();
+                        if(data == 'configed'){
+                            var d = dialog({
+                                content: '恭喜，保存成功咯;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                                location.reload();
+                            }, 2000); 
+                            
+                        }
+                        else {
+                            var d = dialog({
+                                content: '哎呀，保存失败啦-_-!'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 2000);
+                        }
+                    }
+                }
+                $(this).ajaxSubmit(options);  
+               return false; //阻止表单默认提交  
+            });
+      $("#testemail").click(function(){
+      	if($("#mail_test").val()!=''){
+             //正在发送对话框
+   	  	         var dosave = dialog({content: '正在发送测试邮件，请稍等下啊-)'});
+                     dosave.show();
+                $.ajax({
+                	type:'post',
+                	dataType:'json',
+                	url:'<?php echo U("Admin/Rbac/sysConfHandle");?>',
+                	data:{'type':'sendtestmail','mail_test':$("#mail_test").val()},
+                	success:function(data){
+                		dosave.close().remove();
+                		if(data == 'sended'){
+                			var d = dialog({
+                                content: '恭喜，测试邮件发送成功咯,快去查看吧;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                                location.reload();
+                            }, 3000); 
+                		}else{
+                			 var d = dialog({
+                                content: '哎呀，测试邮件失败啦 -_-!,请检查SMTP配置'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 3000);
+                		}
+                	}
+                });
+      	}else{
+          var d = dialog({ content: '你没有写测试邮件的发件人啊 -_-!,我都不知道该发给谁'});
+              d.show();
+              setTimeout(function () {
+                d.close().remove();
+              }, 3000);
+        }
+      });
+   });
+</script>
+</body>
+</html>
