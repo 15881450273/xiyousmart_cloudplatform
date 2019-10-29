@@ -12,6 +12,9 @@
     <script type="text/javascript" src="__PUBLIC__/bui-bootstrap/Js/ckform.js"></script>
     <script type="text/javascript" src="__PUBLIC__/bui-bootstrap/Js/common.js"></script>
     <script type="text/javascript" src="__PUBLIC__/lib/jquery.form.js"></script>
+    <!--弹出对话框-->
+    <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
+    <script src="__PUBLIC__/artDialog/dist/dialog-min.js"></script>
     <!-- 引入ueditor -->
        <script type="text/javascript">
         window.UEDITOR_HOME_URL = '__ROOT__/Data/ueditor/';

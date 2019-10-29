@@ -182,4 +182,160 @@ class Uploader
             $this->stateInfo = $this->getStateInfo("ERROR_HTTP_CONTENTTYPE");
             return;
         }
+
+        //打开输出缓冲区并获取远程图片
+        ob_start();
+        $context = stream_context_create(
+            array('http' => array(
+                'follow_location' => false // don't follow redirects
+            ))
+        );
+        readfile($imgUrl, false, $context);
+        $img = ob_get_contents();
+        ob_end_clean();
+        preg_match("/[\/]([^\/]*)[\.]?[^\.\/]*$/", $imgUrl, $m);
+
+        $this->oriName = $m ? $m[1]:"";
+        $this->fileSize = strlen($img);
+        $this->fileType = $this->getFileExt();
+        $this->fullName = $this->getFullName();
+        $this->filePath = $this->getFilePath();
+        $this->fileName = $this->getFileName();
+        $dirname = dirname($this->filePath);
+
+        //检查文件大小是否超出限制
+        if (!$this->checkSize()) {
+            $this->stateInfo = $this->getStateInfo("ERROR_SIZE_EXCEED");
+            return;
+        }
+
+        //创建目录失败
+        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
+            $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
+            return;
+        } else if (!is_writeable($dirname)) {
+            $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
+            return;
+        }
+
+        //移动文件
+        if (!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
+            $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
+        } else { //移动成功
+            $this->stateInfo = $this->stateMap[0];
+        }
+
+    }
+
+    /**
+     * 上传错误检查
+     * @param $errCode
+     * @return string
+     */
+    private function getStateInfo($errCode)
+    {
+        return !$this->stateMap[$errCode] ? $this->stateMap["ERROR_UNKNOWN"] : $this->stateMap[$errCode];
+    }
+
+    /**
+     * 获取文件扩展名
+     * @return string
+     */
+    private function getFileExt()
+    {
+        return strtolower(strrchr($this->oriName, '.'));
+    }
+
+    /**
+     * 重命名文件
+     * @return string
+     */
+    private function getFullName()
+    {
+        //替换日期事件
+        $t = time();
+        $d = explode('-', date("Y-y-m-d-H-i-s"));
+        $format = $this->config["pathFormat"];
+        $format = str_replace("{yyyy}", $d[0], $format);
+        $format = str_replace("{yy}", $d[1], $format);
+        $format = str_replace("{mm}", $d[2], $format);
+        $format = str_replace("{dd}", $d[3], $format);
+        $format = str_replace("{hh}", $d[4], $format);
+        $format = str_replace("{ii}", $d[5], $format);
+        $format = str_replace("{ss}", $d[6], $format);
+        $format = str_replace("{time}", $t, $format);
+
+        //过滤文件名的非法自负,并替换文件名
+        $oriName = substr($this->oriName, 0, strrpos($this->oriName, '.'));
+        $oriName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $oriName);
+        $format = str_replace("{filename}", $oriName, $format);
+
+        //替换随机字符串
+        $randNum = rand(1, 10000000000) . rand(1, 10000000000);
+        if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
+            $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, $matches[1]), $format);
+        }
+
+        $ext = $this->getFileExt();
+        return $format . $ext;
+    }
+
+    /**
+     * 获取文件名
+     * @return string
+     */
+    private function getFileName () {
+        return substr($this->filePath, strrpos($this->filePath, '/') + 1);
+    }
+
+    /**
+     * 获取文件完整路径
+     * @return string
+     */
+    private function getFilePath()
+    {
+        $fullname = $this->fullName;
+        $rootPath = $_SERVER['DOCUMENT_ROOT'];
+
+        if (substr($fullname, 0, 1) != '/') {
+            $fullname = '/' . $fullname;
+        }
+
+        return $rootPath . $fullname;
+    }
+
+    /**
+     * 文件类型检测
+     * @return bool
+     */
+    private function checkType()
+    {
+        return in_array($this->getFileExt(), $this->config["allowFiles"]);
+    }
+
+    /**
+     * 文件大小检测
+     * @return bool
+     */
+    private function  checkSize()
+    {
+        return $this->fileSize <= ($this->config["maxSize"]);
+    }
+
+    /**
+     * 获取当前上传成功文件的各项信息
+     * @return array
+     */
+    public function getFileInfo()
+    {
+        return array(
+            "state" => $this->stateInfo,
+            "url" => $this->fullName,
+            "title" => $this->fileName,
+            "original" => $this->oriName,
+            "type" => $this->fileType,
+            "size" => $this->fileSize
+        );
+    }
+
 }

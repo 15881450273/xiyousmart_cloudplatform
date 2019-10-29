@@ -145,6 +145,13 @@
           return rst;
         }
  
+       /* //添加记录
+        function addFunction(){
+          var newData = {b : 0};
+          store.addAt(newData,0);
+          editing.edit(newData,'a'); //添加记录后，直接编辑
+        }
+        */
        
         $('#btnSave').on('click',function(){
           var r = confirm("确定保存修改？");

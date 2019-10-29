@@ -15,6 +15,7 @@
     <!--弹出对话框-->
     <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
     <script src="__PUBLIC__/artDialog/dist/dialog-plus.js"></script>
+
     <!-- 引入ueditor -->
        <script type="text/javascript">
         window.UEDITOR_HOME_URL = '__ROOT__/Data/ueditor/';
@@ -244,6 +245,56 @@
                 $(this).ajaxSubmit(options);  
                return false; //阻止表单默认提交  
             });
+   //删除流程信息
+   $(".del").click(function(){
+     var task_id = $(this).attr("taskid");
+         var d = dialog({
+              title: '提示',
+              content: '确定要删除？？',
+              okValue: '确定',
+              ok: function () {
+                 $.ajax({
+             type: 'POST',
+             url: '{:U("Admin/Notice/delnoticeHandle")}' ,
+             data: {task_id:task_id} ,
+             dataType: 'json',
+             success:function(data){
+               if(data){
+                            var d = dialog({
+                                content: '恭喜，删除成功咯;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                                location.reload();
+                                
+                            }, 2000);
+                            
+                        }
+                        else {
+                            var d = dialog({
+                                content: '哎呀，删除失败啦-_-!'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 2000);
+                        }
+
+             }
+        });
+          return;
+              },
+              cancelValue: '取消',
+              cancel: function () {}
+          });
+        d.show();
+
+      
+   });
+
+
+});
 
 </script>
 </body>

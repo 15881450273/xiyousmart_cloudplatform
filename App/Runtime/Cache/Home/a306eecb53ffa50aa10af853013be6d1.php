@@ -124,6 +124,53 @@
               }, 3000);
         }
       });
+
+  //重置密码
+
+  $("#reset").click(function(){
+        var p1 = $("#password1").val(),
+            p2 = $("#password2").val(),
+            code = $("#code").val();
+
+        if(p1==p2&&p1!=''){
+             //等待对话框
+                 var dosave = dialog({content: '正在努力和服务器哥哥说话，请稍等下啊-)'});
+                     dosave.show();
+                $.ajax({
+                  type:'post',
+                  dataType:'json',
+                  url:'<?php echo U("Home/Login/forgetHandle");?>',
+                  data:{'type':'reset','p1':p1,'p2':p2,'code':code},
+                  success:function(data){
+                    dosave.close().remove();
+                    if(data == 'reseted'){
+                      var d = dialog({
+                                content: '恭喜，密码重置成功咯,快去登陆吧;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                                window.location.href="<?php echo U('Home/Login/index');?>";
+                            }, 3000); 
+                    }else{
+                       var d = dialog({
+                                content: '哎呀，密码重置失败啦 -_-!,有可能这就是正确的密码，去登陆试试吧'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 3000);
+                    }
+                  }
+                });
+        }else{
+          var d = dialog({ content: '两次密码输入不一致，真是受不了你了'});
+              d.show();
+              setTimeout(function () {
+                d.close().remove();
+              }, 3000);
+        }
+      });
  });
 </script>
 </body>

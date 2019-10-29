@@ -440,4 +440,224 @@ UE.I18N['zh-cn'] = {
 
 
     },
+    'scrawl':{
+        'static':{
+            'lang_input_previousStep':"上一步",
+            'lang_input_nextsStep':"下一步",
+            'lang_input_clear':'清空',
+            'lang_input_addPic':'添加背景',
+            'lang_input_ScalePic':'缩放背景',
+            'lang_input_removePic':'删除背景',
+            'J_imgTxt':{title:'添加背景图片'}
+        },
+        'noScarwl':"尚未作画，白纸一张~",
+        'scrawlUpLoading':"涂鸦上传中,别急哦~",
+        'continueBtn':"继续",
+        'imageError':"糟糕，图片读取失败了！",
+        'backgroundUploading':'背景图片上传中,别急哦~'
+    },
+    'music':{
+        'static':{
+            'lang_input_tips':"输入歌手/歌曲/专辑，搜索您感兴趣的音乐！",
+            'J_searchBtn':{value:'搜索歌曲'}
+        },
+        'emptyTxt':'未搜索到相关音乐结果，请换一个关键词试试。',
+        'chapter':'歌曲',
+        'singer':'歌手',
+        'special':'专辑',
+        'listenTest':'试听'
+    },
+    'anchor':{
+        'static':{
+            'lang_input_anchorName':'锚点名字：'
+        }
+    },
+    'charts':{
+        'static':{
+            'lang_data_source':'数据源：',
+            'lang_chart_format': '图表格式：',
+            'lang_data_align': '数据对齐方式',
+            'lang_chart_align_same': '数据源与图表X轴Y轴一致',
+            'lang_chart_align_reverse': '数据源与图表X轴Y轴相反',
+            'lang_chart_title': '图表标题',
+            'lang_chart_main_title': '主标题：',
+            'lang_chart_sub_title': '子标题：',
+            'lang_chart_x_title': 'X轴标题：',
+            'lang_chart_y_title': 'Y轴标题：',
+            'lang_chart_tip': '提示文字',
+            'lang_cahrt_tip_prefix': '提示文字前缀：',
+            'lang_cahrt_tip_description': '仅饼图有效， 当鼠标移动到饼图中相应的块上时，提示框内的文字的前缀',
+            'lang_chart_data_unit': '数据单位',
+            'lang_chart_data_unit_title': '单位：',
+            'lang_chart_data_unit_description': '显示在每个数据点上的数据的单位， 比如： 温度的单位 ℃',
+            'lang_chart_type': '图表类型：',
+            'lang_prev_btn': '上一个',
+            'lang_next_btn': '下一个'
+        }
+    },
+    'emotion':{
+        'static':{
+            'lang_input_choice':'精选',
+            'lang_input_Tuzki':'兔斯基',
+            'lang_input_BOBO':'BOBO',
+            'lang_input_lvdouwa':'绿豆蛙',
+            'lang_input_babyCat':'baby猫',
+            'lang_input_bubble':'泡泡',
+            'lang_input_youa':'有啊'
+        }
+    },
+    'gmap':{
+        'static':{
+            'lang_input_address':'地址',
+            'lang_input_search':'搜索',
+            'address':{value:"北京"}
+        },
+        searchError:'无法定位到该地址!'
+    },
+    'help':{
+        'static':{
+            'lang_input_about':'关于UEditor',
+            'lang_input_shortcuts':'快捷键',
+            'lang_input_introduction':'UEditor是由百度web前端研发部开发的所见即所得富文本web编辑器，具有轻量，可定制，注重用户体验等特点。开源基于BSD协议，允许自由使用和修改代码。',
+            'lang_Txt_shortcuts':'快捷键',
+            'lang_Txt_func':'功能',
+            'lang_Txt_bold':'给选中字设置为加粗',
+            'lang_Txt_copy':'复制选中内容',
+            'lang_Txt_cut':'剪切选中内容',
+            'lang_Txt_Paste':'粘贴',
+            'lang_Txt_undo':'重新执行上次操作',
+            'lang_Txt_redo':'撤销上一次操作',
+            'lang_Txt_italic':'给选中字设置为斜体',
+            'lang_Txt_underline':'给选中字加下划线',
+            'lang_Txt_selectAll':'全部选中',
+            'lang_Txt_visualEnter':'软回车',
+            'lang_Txt_fullscreen':'全屏'
+        }
+    },
+    'insertframe':{
+        'static':{
+            'lang_input_address':'地址：',
+            'lang_input_width':'宽度：',
+            'lang_input_height':'高度：',
+            'lang_input_isScroll':'允许滚动条：',
+            'lang_input_frameborder':'显示框架边框：',
+            'lang_input_alignMode':'对齐方式：',
+            'align':{title:"对齐方式", options:["默认", "左对齐", "右对齐", "居中"]}
+        },
+        'enterAddress':'请输入地址!'
+    },
+    'link':{
+        'static':{
+            'lang_input_text':'文本内容：',
+            'lang_input_url':'链接地址：',
+            'lang_input_title':'标题：',
+            'lang_input_target':'是否在新窗口打开：'
+        },
+        'validLink':'只支持选中一个链接时生效',
+        'httpPrompt':'您输入的超链接中不包含http等协议名称，默认将为您添加http://前缀'
+    },
+    'map':{
+        'static':{
+            lang_city:"城市",
+            lang_address:"地址",
+            city:{value:"北京"},
+            lang_search:"搜索",
+            lang_dynamicmap:"插入动态地图"
+        },
+        cityMsg:"请选择城市",
+        errorMsg:"抱歉，找不到该位置！"
+    },
+    'searchreplace':{
+        'static':{
+            lang_tab_search:"查找",
+            lang_tab_replace:"替换",
+            lang_search1:"查找",
+            lang_search2:"查找",
+            lang_replace:"替换",
+            lang_searchReg:'支持正则表达式，添加前后斜杠标示为正则表达式，例如“/表达式/”',
+            lang_searchReg1:'支持正则表达式，添加前后斜杠标示为正则表达式，例如“/表达式/”',
+            lang_case_sensitive1:"区分大小写",
+            lang_case_sensitive2:"区分大小写",
+            nextFindBtn:{value:"下一个"},
+            preFindBtn:{value:"上一个"},
+            nextReplaceBtn:{value:"下一个"},
+            preReplaceBtn:{value:"上一个"},
+            repalceBtn:{value:"替换"},
+            repalceAllBtn:{value:"全部替换"}
+        },
+        getEnd:"已经搜索到文章末尾！",
+        getStart:"已经搜索到文章头部",
+        countMsg:"总共替换了{#count}处！"
+    },
+    'snapscreen':{
+        'static':{
+            lang_showMsg:"截图功能需要首先安装UEditor截图插件！ ",
+            lang_download:"点此下载",
+            lang_step1:"第一步，下载UEditor截图插件并运行安装。",
+            lang_step2:"第二步，插件安装完成后即可使用，如不生效，请重启浏览器后再试！"
+        }
+    },
+    'spechars':{
+        'static':{},
+        tsfh:"特殊字符",
+        lmsz:"罗马字符",
+        szfh:"数学字符",
+        rwfh:"日文字符",
+        xlzm:"希腊字母",
+        ewzm:"俄文字符",
+        pyzm:"拼音字母",
+        yyyb:"英语音标",
+        zyzf:"其他"
+    },
+    'edittable':{
+        'static':{
+            'lang_tableStyle':'表格样式',
+            'lang_insertCaption':'添加表格名称行',
+            'lang_insertTitle':'添加表格标题行',
+            'lang_insertTitleCol':'添加表格标题列',
+            'lang_orderbycontent':"使表格内容可排序",
+            'lang_tableSize':'自动调整表格尺寸',
+            'lang_autoSizeContent':'按表格文字自适应',
+            'lang_autoSizePage':'按页面宽度自适应',
+            'lang_example':'示例',
+            'lang_borderStyle':'表格边框',
+            'lang_color':'颜色:'
+        },
+        captionName:'表格名称',
+        titleName:'标题',
+        cellsName:'内容',
+        errorMsg:'有合并单元格，不可排序'
+    },
+    'edittip':{
+        'static':{
+            lang_delRow:'删除整行',
+            lang_delCol:'删除整列'
+        }
+    },
+    'edittd':{
+        'static':{
+            lang_tdBkColor:'背景颜色:'
+        }
+    },
+    'formula':{
+        'static':{
+        }
+    },
+    'wordimage':{
+        'static':{
+            lang_resave:"转存步骤",
+            uploadBtn:{src:"upload.png",alt:"上传"},
+            clipboard:{style:"background: url(copy.png) -153px -1px no-repeat;"},
+            lang_step:"1、点击顶部复制按钮，将地址复制到剪贴板；2、点击添加照片按钮，在弹出的对话框中使用Ctrl+V粘贴地址；3、点击打开后选择图片上传流程。"
+        },
+        'fileType':"图片",
+        'flashError':"FLASH初始化失败，请检查FLASH插件是否正确安装！",
+        'netError':"网络连接错误，请重试！",
+        'copySuccess':"图片地址已经复制！",
+        'flashI18n':{} //留空默认中文
+    },
+    'autosave': {
+        'saving':'保存中...',
+        'success':'本地保存成功'
+    }
 };

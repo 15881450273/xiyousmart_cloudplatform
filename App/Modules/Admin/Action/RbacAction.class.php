@@ -503,7 +503,104 @@ Class RbacAction extends CommonAction {
 		$this->ajaxReturn($status,'json');
 
 	}
-	
+	public function statusHandle(){
+		  $id = I('status_id');
+		$data=array(
+			'id'=>$id,
+			'name'=>I('name'),
+			'content'=>I('statusinfo')
+			);
+
+		if(M('status')->where(array('id'=>$id))->find()){
+			$ok = M('status')->where(array('id'=>$id))->save($data);
+			echo $ok;die;
+			if($ok) $this->ajaxReturn(1,'json');
+
+		}
+		else{
+			$ok = M('status')->add($data);
+			if($ok) $this->ajaxReturn(1,'json');
+		}
+	}
+	public function delstatus(){
+		$status_id = I("status_id");
+		if(M("status")->where(array('id'=>$status_id))->delete())
+			$this->ajaxReturn(1,'json');
+		else
+			$this->ajaxReturn(0,'json');
+	}
+
+
+	//系统通用设置
+	public function sysConf(){
+		$conf = Config();//获取数据库中的配置文件
+
+		$available = M('userinfo')->Distinct(true)->field('entrance')->select();
+		$year = array();
+		foreach ($available as $key => $value) {
+			$year[] = $value['entrance'];
+		}
+        $this->year = $year;
+		$this->checkemail = $conf['checkemail'];
+		$this->basedsystime = $conf['basedsystime'];
+		$this->freshman = $conf['freshman'];
+		$this->mail_host = $conf['mail_host'];
+		$this->mail_port = $conf['mail_port'];
+		$this->mail_username = $conf['mail_username'];
+		$this->mail_password = $conf['mail_password'];
+		$this->show();
+
+		/*if(I('type')=='edit'){
+			
+		}*/
+	}
+
+	public function sysConfHandle(){
+
+		//p(I('mail_test'));die;
+		if(I('type') == 'sendtestmail')
+		{
+			if(sendMail(I('mail_test'),'党建系统测试邮件','党建系统测试邮件,发送时间：'.date('Y-m-d H:i:s'))){
+				$this->ajaxReturn('sended','json');
+
+			}else{
+				$this->ajaxReturn('sendfail','json');
+			}
+
+		}else if(I('type') == 'saveconf'){
+			//写入配置
+			try{
+				if(I('checkemail')=='on'){
+					Config('checkemail','1');
+				}else{
+					Config('checkemail','0');
+				}
+
+				if(I('basedsystime')=='on'){
+					Config('basedsystime','1');
+				}else{
+					Config('basedsystime','0');
+				    Config('freshman',I('freshman'));
+				}
+				
+				
+			    Config('mail_host',I('mail_host')) ;
+				Config('mail_port',I('mail_port')) ;
+				Config('mail_username',I('mail_username'));
+				Config('mail_password',I('mail_password')) ;
+			}catch(Exception $e){
+				$this->ajaxReturn('configfail','json');die;
+			}
+
+				$this->ajaxReturn('configed','json');
+
+			
+		
+		}
+		
+		
+				
+	}
 
 
 }

@@ -191,7 +191,44 @@
          store.load({college:college,major:major,classes:classes,entrance:entrance,time:time,type : '1',search:'1'});
          //store.load();
          });
+        
+
+       
+
+
       });
+
+      
+   //选择了学院后的动作
+$("select[name='college']").change(function(){
+            $("#major").children().remove("[class!='stay']");
+            $("#class").children().remove("[class!='stay']");
+            $.post("<?php echo U('Index/Task/college','','');?>",{col:$(this).val().trim()},function(data){
+                    //alert(data[0].name);
+                    var circle = '' ;
+                    for(var i=0;data[i]!=null;i++){
+                        circle+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    }
+                    //alert(circle);
+                    $("#major").append(circle);
+
+            })
+         });
+    //选择了专业后的动作
+        $("#major").change(function(){
+            $("#class").children().remove("[class!='stay']");
+            $.post("<?php echo U('Index/Task/major','','');?>",{col:$(this).val().trim()},function(data){
+                    //alert(data[0].name);
+                    var circle = '' ;
+                    for(var i=0;data[i]!=null;i++){
+                        circle+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    }
+                    //alert(circle);
+                    $("#class").append(circle);
+
+            })
+        });
+
     </script>
 <!-- script end -->
   </div>

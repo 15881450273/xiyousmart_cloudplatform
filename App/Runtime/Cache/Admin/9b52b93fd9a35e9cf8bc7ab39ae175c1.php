@@ -32,7 +32,7 @@
             .navbar-text.pull-right {
                 float: none;
                 padding-left: 5px;
-                padding-right: 15px;
+                padding-right: 5px;
             }
         }
 

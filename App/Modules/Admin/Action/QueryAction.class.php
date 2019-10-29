@@ -114,6 +114,43 @@ class QueryAction extends CommonAction {
 	$this->display();
 
  }
+ public function userpage(){
+ 	$uid = I('uid');
+ 	//荣誉相关
+ 	$activity = M('activity')->field('content',true)->where(array('uid'=>$uid,'type'=>1))->select();
+ 	$honor = M('activity')->field('content',true)->where(array('uid'=>$uid,'type'=>2))->select();
+ 	$feeling = M('activity')->field('content',true)->where(array('uid'=>$uid,'type'=>3))->select();
+ 	$this->activity = $activity;
+ 	$this->honor = $honor;
+ 	$this->feeling = $feeling;
+ 	//学习相关
+ 	$this->assess_item1 = getGridItems(1);
+ 	$this->assess_item2 = getGridItems(2);
+ 	
+	$assess = D("AssessView")->where(array('uid'=>$uid,'type'=>1))->order('sort')->select();
+	$assess = assess_merge($assess,1); //将成绩合并为三维数组，一维为time学期,二维为用户uid，三维为多个成绩
+ 	$this->item1 = $assess[1][$uid];
+ 	$this->item2 = $assess[2][$uid];
+ 	$this->item3 = $assess[3][$uid];
+ 	$this->item4 = $assess[4][$uid];
+ 	$this->item5 = $assess[5][$uid];
+ 	$this->item6 = $assess[6][$uid];
+ 	$this->item7 = $assess[7][$uid];
+ 	$this->item8 = $assess[8][$uid];
+ 	$thinkassess = D("AssessView")->where(array('uid'=>$uid,'type'=>2))->order('sort')->select();
+ 	//思想相关
+ 	$thinkassess = assess_merge($thinkassess,2);
 
+ 	$this->think = $thinkassess;
+ 	$this->user = M('userinfo')->where(array('uid'=>$uid))->field('number,name')->find();
+ 	$videosum = M('video_recorder')->where(array('uid'=>$uid))->sum('duration')/60.0;
+	$this->video = sprintf("%.2f", $videosum); 
+	//任务记录
+	$this->task = D('CheckListView')->where(array('uid'=>$uid))->select();
+ 	//p($task);die;
+ 	//$this->item1 = M('')
+ 	//p($activity);die;
+ 	$this->show();
+ }
 }
 ?>

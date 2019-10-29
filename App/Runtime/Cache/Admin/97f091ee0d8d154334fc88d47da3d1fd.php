@@ -222,7 +222,70 @@
       var selections = grid.getSelection();
       cancleItems(selections);
     }
+    
+    function cancleItems(items){
+      var ids = [];
+      BUI.each(items,function(item){
+        ids.push(item.task_ok_id);
+      });
+ 
+      if(ids.length){
+        BUI.Message.Confirm('确认要取消选中的审核通过记录么？',function(){
+          $.ajax({
+            url : '<?php echo U('Admin/Check/checkCancel');?>',
+            dataType : 'json',
+            data : {ids : ids},
+            success : function(data){
+              if(data){ //操作成功
+                search.load();
+              }else{ //操作失败
+                BUI.Message.Alert('操作失败！');
+              }
+            }
+        });
+        },'question');
+      }
+    }
+ 
+    //监听事件，删除一条记录
+    grid.on('cellclick',function(ev){
+      var sender = $(ev.domTarget); //点击的Dom
+      if(sender.hasClass('btn-del')){
+        var record = ev.record;
+        delItems([record]);
+      }
+    });
   });
+
+//选择了学院后的动作
+$("select[name='college']").change(function(){
+            $("#major").children().remove("[class!='stay']");
+            $("#class").children().remove("[class!='stay']");
+            $.post("<?php echo U('Index/Task/college','','');?>",{col:$(this).val().trim()},function(data){
+                    //alert(data[0].name);
+                    var circle = '' ;
+                    for(var i=0;data[i]!=null;i++){
+                        circle+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    }
+                    //alert(circle);
+                    $("#major").append(circle);
+
+            })
+         });
+    //选择了专业后的动作
+        $("#major").change(function(){
+            $("#class").children().remove("[class!='stay']");
+            $.post("<?php echo U('Index/Task/major','','');?>",{col:$(this).val().trim()},function(data){
+                    //alert(data[0].name);
+                    var circle = '' ;
+                    for(var i=0;data[i]!=null;i++){
+                        circle+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    }
+                    //alert(circle);
+                    $("#class").append(circle);
+
+            })
+        });
 </script>
  
 <body>

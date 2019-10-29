@@ -8,6 +8,15 @@
   <script type="text/javascript" src="__PUBLIC__/lib/jquery-1.10.1.min.js"></script> 
   <!--bootstrap3资源引入-->
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap3/css/bootstrap.min.css" />
+	   <!--fancybox资源引入-->
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/fancybox/source/jquery.fancybox.css" />
+  <script type="text/javascript" src="__PUBLIC__/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+	 <script type="text/javascript" src="__PUBLIC__/bootstrap3/js/bootstrap.min.js"></script> 
+	 <!--弹出对话框-->
+    <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
+    <script src="__PUBLIC__/artDialog/dist/dialog-plus.js"></script>
 	<style>
 	body{
 			width: 800px;

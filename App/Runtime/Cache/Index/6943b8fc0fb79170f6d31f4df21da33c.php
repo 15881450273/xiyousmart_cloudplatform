@@ -7,6 +7,11 @@
 	<!--bootstrap3资源引入-->
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap3/css/bootstrap.min.css" />
 	<script type="text/javascript" src="__PUBLIC__/bootstrap3/js/bootstrap.min.js"></script>
+	<!--fancybox资源引入-->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/fancybox/source/jquery.fancybox.css" />
+	<script type="text/javascript" src="__PUBLIC__/fancybox/source/jquery.fancybox.pack.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/video.js"></script>
 	<title>微党课</title>
 	<script> 
 	

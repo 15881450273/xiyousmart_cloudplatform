@@ -48,11 +48,16 @@
       <server host="localhost" id="3d0aabb0-a728-4be4-b2e3-fc81ceb74225" name="spmd" />
     </servers>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1TbOr6PZX8fayByGv1xZSMrYH4o" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.externalDependencies" />
@@ -91,9 +96,8 @@
       <workItem from="1572846102684" duration="17150000" />
       <workItem from="1572920082499" duration="2517000" />
       <workItem from="1573359655486" duration="4097000" />
-      <workItem from="1573725539713" duration="250000" />
-      <workItem from="1573743904568" duration="5000" />
-      <workItem from="1573750458696" duration="27000" />
+      <workItem from="1573725539713" duration="1666000" />
+      <workItem from="1575183069007" duration="4290000" />
     </task>
     <servers />
   </component>

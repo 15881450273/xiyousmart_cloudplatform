@@ -110,5 +110,66 @@ Class LoginAction extends Action{
 			session_destroy();
 			$this->redirect('Home/Login/index');
 		}
+
+		
+
+    public function register(){
+    	
+		//获取学院专业年级的信息
+		$this->college = M('class')->where(array('flag'=>1))->select();
+		//p($college);
+
+        //将学院专业班级的id转换为名字
+		$userinfo = class_convert($userinfo);
+		$begin = M('config')->where(array('name'=>'freshman'))->getField('options');
+		$entrance = array($begin,$begin-1,$begin-2,$begin-3) ;
+		//p($entrance);
+		$this->entrance = $entrance;
+    	$this->show();
+    	
+    }
+    public function college(){
+		$col=M('class')->where(array('fid'=>I('col')))->select();
+		$this->ajaxReturn($col,'json');
+	}
+	public function major(){
+		$col=M('class')->where(array('fid'=>I('col')))->select();
+		$this->ajaxReturn($col,'json');
+	}
+	public function registerHandle(){
+		if(M('user')->where(array('username'=>I('number')))->select())
+			{$this->ajaxReturn('-1','json');die;}
+		if(M('user')->where(array('email'=>I('email')))->select())
+			{$this->ajaxReturn('-2','json');die;}
+		$user=array(
+			'username' => I('number'),
+			'password' => I('qq','','md5'),
+			'email'    => I('email')
+			);
+		$uid = M('user')->add($user);
+
+		$userinfo = array(
+            'uid' => $uid,
+			'name' => I('name'),
+		    'sex' => I('sex'),
+		    'number' => I('number'),
+		    'entrance' =>I('entrance'),
+		    'college' => I('college'),
+		    'major' => I('major'),
+		    'class' => I('class'),
+		    'phone' => I('phone'),
+		    'qq' => I('qq'),
+		    'email' =>I('email')
+			);
+		if(M('userinfo')->where(array('number'=>I('number')))->select())
+			$Return=M('userinfo')->where(array('number'=>I('number')))->save($userinfo);
+        else
+		$Return=M('userinfo')->add($userinfo);
+
+		$this->ajaxReturn($Return,'json');
+		/*$url = U('Index/Index/index');
+    	if($Return) $this->success("注册成功",$url);
+    	else $this->error("注册失败，请重试或与管理员联系");*/
+	}
 }
 ?>   
