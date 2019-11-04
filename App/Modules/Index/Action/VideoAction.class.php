@@ -40,4 +40,28 @@ class VideoAction extends CommonAction {
 		
 		
 	}
+	public function watched(){
+		$recorder = M('video_recorder');
+		$video_recorder = $recorder->where(array('uid'=>$_SESSION['uid']))->select();
+		
+		foreach ($video_recorder as $key => $value) {
+			$video = M('video')->where(array('id'=>$value['vid']))->find();
+		 	$video_recorder[$key]['title'] = $video['title'];
+		 	$video_recorder[$key]['content'] = $video['content'];
+		 	$video_recorder[$key]['url'] = $video['url'];
+		 } 
+		 //统计总的观看时长
+		$sum = $recorder->where(array('uid'=>$_SESSION['uid']))->sum('duration')/60.0;
+		$this->sum = sprintf("%.2f", $sum);
+		$this->list = $video_recorder;
+		$this->show();
+	}
+
+	public function mail(){
+		if(sendMail('xupingxx@qq.com','党建系统测试邮件','党建系统测试邮件'))
+			echo "发送成功";
+		else
+			echo "发送失败";
+	}	
+}
 ?>

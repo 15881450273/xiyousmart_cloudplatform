@@ -144,4 +144,84 @@ class TaskAction extends CommonAction {
     	$this->show();
 
     }
+    //删除活动心得荣誉
+    public function delActivity(){
+    	$id = I('delid');
+    	//p($id);die;
+    	if(M('activity')->where(array('id'=>$id))->delete()){
+    		$this->ajaxReturn(1,'json');
+
+    	}else{
+    		$this->ajaxReturn(0,'json');
+    	}
+
+    }
+    //content内容展示
+    public function contentShow(){
+    	$id = $_GET['id'];
+    	$show;
+    	//如果是任务完成详情则用CheckListView
+    	if(I('task')==1){
+    		$show = M('task_ok')->where(array('id'=>$id))->find();
+    	}else{
+    		$show = M('activity')->where(array('id'=>$id))->find();
+    	}
+    	//p($show);die;
+     	$this->show = $show;
+    	$this->show();
+
+    } 
+	//院专业班级联查
+	public function college(){
+		$col=M('class')->where(array('fid'=>I('col')))->select();
+		$manager = D('UserManageView')->where(array('user_id'=>$_SESSION['uid']))->select();
+		$haveclass = array();
+		foreach ($manager as $key => $value) {
+			$haveclass[]=$value['class_id'];
+		}
+		//p($manager);die;
+		$ma = array();
+		foreach ($col as $key => $value) {
+			if(in_array($value['id'], $haveclass))
+				$ma[] = $col[$key]; 
+		}
+		$this->ajaxReturn($ma,'json');
+	}
+	public function major(){
+		$col=M('class')->where(array('fid'=>I('col')))->select();
+		$manager = D('UserManageView')->where(array('user_id'=>$_SESSION['uid']))->select();
+		$haveclass = array();
+		foreach ($manager as $key => $value) {
+			$haveclass[]=$value['class_id'];
+		}
+		//p($manager);die;
+		$ma = array();
+		foreach ($col as $key => $value) {
+			if(in_array($value['id'], $haveclass))
+				$ma[] = $col[$key]; 
+		}
+		$this->ajaxReturn($ma,'json');
+
+	}
+	//ajax提交内容审核
+	public function postCheck(){
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 ?>
