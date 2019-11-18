@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>{$task.title}</title>
+	<css file="__PUBLIC__/bootstrap3/css/bootstrap.min.css"/>
+</head>
+<body style="width:960px;margin:auto 0;">
+<h4 style="margin-left:50px;"><a class="btn btn-success" href="{:U('Admin/Check/index')}">后退</a></h4>
+<!-- onclick="history.go(-1)" -->
+<h4>{$task.title}</h4>
+	{$task_ok.content}
+</body>
+</html>

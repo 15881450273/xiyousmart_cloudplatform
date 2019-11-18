@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Check</title>
+
+    <script src="__PUBLIC__/bui-bootstrap/assets/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/lib/jquery.form.js"></script>
+    <!--弹出对话框-->
+    <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
+    <script src="__PUBLIC__/artDialog/dist/dialog-min.js"></script>
+<style>
+	#check{
+		width: 100%;
+		height: 60px;
+		position: fixed;
+		top: 0px;
+		left: auto;
+		background-color: yellow;
+
+	}
+	.checkform{
+		margin: 0 auto;
+	}
+	.checkform tr td{
+		padding-left:10px; 
+	}
+	#iframe{
+		width: 100%;
+		height: 100%;
+		padding-top: 60px;
+
+	}
+	select{
+        width:150px;
+     }
+</style>
+</head>
+<body>
+    <div id="iframe">
+	<iframe src="{:U($check_url)}?uid={$uid}&task_id={$task_id}" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%" height="100%" id="iframepage" name="iframepage" onLoad="iFrameHeight()" ></iframe>
+	</div>
+	<div id="check">
+		<form id="checksubmit" action="{:U('Admin/Check/checkHandle')}" method="post">
+			<table class="checkform" >
+				<tr>
+				<td><a href="{:U('Admin/check/checklist')}">返回</a></td>
+				    <input type="hidden" name="uid" value="{$uid}"/>
+				    <input type="hidden" name="task_id" value="{$task_id}"/>
+					<td>审核结果</td>
+					<td>
+						<select name="check_result">
+						    <option value="0">请选择</option>
+							<option value="5">A+</option>
+							<option value="4">A</option>
+							<option value="3">B+</option>
+							<option value="2">B</option>
+							<option value="1">C</option>
+						</select>
+					</td>
+
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审核意见</td>
+					<td>
+						<textarea name="check_feedback" cols="30" rows="2"></textarea>
+					</td>
+					<td>
+						<button type="submit">提交</button>
+					</td>
+				</tr>
+			</table>
+		</center>
+	</div>
+	<script type="text/javascript" language="javascript">
+
+
+
+    function iFrameHeight() {
+
+        var ifm= document.getElementById("iframepage");
+
+        var subWeb = document.frames ? document.frames["iframepage"].document :
+
+ifm.contentDocument;
+
+            if(ifm != null && subWeb != null) {
+
+            ifm.height = subWeb.body.scrollHeight;
+
+            }
+
+    }
+    
+</script> 
+<script>
+	$(document).ready(function(){
+
+		function validate(formData, jqForm, options){
+			var form = jqForm[0];
+            if (form.check_result.value == 0) { 
+                var d = dialog({
+                	            title : '提示',
+                                content: '一定要选择审核结果呀！',
+                                ok: function () {},
+                            });
+                            d.show();
+                return false; 
+                } 
+    } 
+                  
+  $("#checsubmit").submit(function(){
+  	var options = {
+                    target : '#output1',
+                    dataType : 'json',
+                    beforeSubmit : validate,
+                    success:function(data){
+                        if(data){
+                            var d = dialog({
+                                content: '恭喜，提交成功咯;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 2000);
+                            window.location.href="{:U('Admin/Check/checklist')}";
+                        }
+                        else {
+                            var d = dialog({
+                                content: '哎呀，提交失败啦-_-!'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 2000);
+                        }
+
+                    }
+                }
+                $(this).ajaxSubmit(options);  
+               return false; //阻止表单默认提交  
+    });
+});
+</script>
+</body>
+</html>
