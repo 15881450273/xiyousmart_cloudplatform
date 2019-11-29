@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<css file="__PUBLIC__/bootstrap3/css/bootstrap.min.css"/>
+	<js file="__PUBLIC__/lib/jquery-1.8.1.min.js"/>
+	<js file="__PUBLIC__/bootstrap3/js/bootstrap.min.js"/>
+	<script type="text/javascript" src="__PUBLIC__/lib/jquery.form.js"></script>
+    <!--弹出对话框-->
+    <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
+    <script src="__PUBLIC__/artDialog/dist/dialog-min.js"></script>
+	<title>showTaskContent</title>
+</head>
+<body>
+	<div class="panel panel-primary">
+  <div class="panel-heading" id="title"><font style="font-size:22px;">线下任务 -- 
+  {$task['title']}</font>
+  <if condition="$task_ok"><font style="color:red;">你已提交本任务</font>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <if condition="$task_ok['task_comp'] eq 1"><font style="color:#FFFF37;font-size:20px;">(审核未通过)</font></if>
+	  <if condition="$task_ok.task_comp eq 0"><font style="color:#FFFF37;font-size:20px;">(待审核)</font></if>
+	  <if condition="$task_ok.task_comp eq 2"><font style="color:#FFFF37;font-size:20px;">(审核通过)</font></if>
+  </if>
+  <a style="color:white;" href="{:U('Index/Task/doTask')}?task_id={$task['id']}" target="_blank">在新窗口中打开</a>
+  </div>
+  <div class="panel-body">
+    {$task['content']}
+  </div>
+ </div>
+ <form id="add" action="{:U('Index/Task/showTaskHandle')}" method="post">
+   <input type="hidden" name="task_id" value="{$task['id']}"/>
+  <if condition="$task_ok">
+		  <if condition="$task_ok['task_comp'] eq 1">
+		  <input name="editing" type="hidden" value="1"/>
+		  <button type="submit" class="btn btn-primary" type="button">确认完成</button>
+		  </if>
+	  <else/>
+	  <button type="submit" class="btn btn-primary" type="button">确认完成</button>
+  </if>
+ 
+ </form>
+ <script>
+    $(document).ready(function(){
+        $("#add").submit(function(){
+                var options = {
+                    target : '#output1',
+                    dataType : 'json',
+                    success:function(data){
+                        if(data){
+                            var d = dialog({
+                                content: '恭喜，保存成功咯;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                                //parent.$.fancybox.close();
+                                //关闭浏览器窗口
+                                     if (navigator.userAgent.indexOf("MSIE") > 0) {
+                                      if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
+                                       window.opener = null;
+                                       window.close();
+                                      } else {
+                                       window.open('', '_top');
+                                       window.top.close();
+                                      }
+                                     }
+                                     else if (navigator.userAgent.indexOf("Firefox") > 0) {
+                                      window.location.href = 'about:blank ';
+                                     } else {
+                                      window.opener = null;
+                                      window.open('', '_self', '');
+                                      window.close();
+                                     }
+                                    
+                            }, 2000);
+                            
+                        }
+                        else {
+                            var d = dialog({
+                                content: '哎呀，保存失败啦-_-!'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 2000);
+                        }
+                    }
+                }
+                $(this).ajaxSubmit(options);  
+               return false; //阻止表单默认提交  
+            });
+
+});
+
+</script>
+</body>
+</html>

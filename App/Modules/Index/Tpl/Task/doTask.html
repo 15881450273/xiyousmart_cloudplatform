@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	
+	<title>showTaskContent</title>
+	<css file="__PUBLIC__/bootstrap3/css/bootstrap.min.css"/>
+	<js file="__PUBLIC__/lib/jquery-1.8.1.min.js"/>
+	<js file="__PUBLIC__/bootstrap3/js/bootstrap.min.js"/>
+	<script type="text/javascript" src="__PUBLIC__/lib/jquery.form.js"></script>
+    <!--弹出对话框-->
+    <link rel="stylesheet" href="__PUBLIC__/artDialog/css/ui-dialog.css">
+    <script src="__PUBLIC__/artDialog/dist/dialog-min.js"></script>
+	<!-- 引入ueditor -->
+       <script type="text/javascript">
+        window.UEDITOR_HOME_URL = '__ROOT__/Data/ueditor/';
+         editing  = '{$task_ok["task_comp"]}';
+
+        window.onload = function(){
+            window.UEDITOR_CONFIG.initialFrameWidth = 900;
+            window.UEDITOR_CONFIG.initialFrameHeight = 300;
+            //window.UEDITOR_CONFIG.initialFrameHeight
+             
+     		var ue = UE.getEditor('content');
+            var content = '{$task_ok["content"]}';
+            ue.ready(function() {
+            //设置编辑器的内容
+            if(editing!=2){
+            	ue.setContent(content);
+            }
+            
+            //获取html内容，返回: <p>hello</p>
+            //var html = ue.getContent();
+            //获取纯文本内容，返回: hello
+            //var txt = ue.getContentTxt();
+       		 });
+
+        }
+
+       </script>
+    <js file="__ROOT__/Data/ueditor/ueditor.config.js"/>
+    <js file="__ROOT__/Data/ueditor/ueditor.all.min.js"/>
+    <style>
+    #main{
+    	width:960px;
+    	margin:0 auto;
+    }
+    </style>
+</head>
+<body>
+<div id="main">
+	<div class="panel panel-primary">
+  <div class="panel-heading" id="title"><font style="font-size:22px;">线上任务 -- 
+  {$task['title']}</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <if condition="$task_ok"><font style="color:red;">你已提交本任务</font>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <if condition="$task_ok['task_comp'] eq 1"><font style="color:#FFFF37;font-size:20px;">(审核未通过)</font></if>
+	  <if condition="$task_ok.task_comp eq 0"><font style="color:#FFFF37;font-size:20px;">(待审核)</font></if>
+	  <if condition="$task_ok.task_comp eq 2"><font style="color:#FFFF37;font-size:20px;">(审核通过)</font></if>
+  </if>
+  <a style="color:white;" href="{:U('Index/Task/doTask')}?task_id={$task['id']}" target="_blank">在新窗口中打开</a>
+  </div>
+  <div class="panel-body">
+    {$task['content']}
+  </div>
+ </div>
+ <div class="panel panel-primary">
+  <div class="panel-heading" id="title">
+  在下面富文本编辑中完成相关要求
+  </div>
+  <div class="panel-body">
+     <form id="add" action="{:U('Index/Task/doTaskHandle')}" method="post"  enctype="multipart/form-data">
+     <input type="hidden" name="task_id" value="{$task['id']}"/>
+     <if condition="$task_ok">
+	     <if condition="$task_ok['task_comp'] eq 2">
+	     {$task_ok['content']}
+	     <else/>
+	     
+	     <input name="editing" type="hidden" value="1"/>
+	    <script id="content" type="text/plain" ></script>
+      <button type="submit" class="btn btn-primary" type="button">保存</button>
+	    </if>
+	   <else/>
+	   <script id="content" type="text/plain" ></script>
+     <button type="submit" class="btn btn-primary" type="button">保存</button>
+    </if>
+     
+  </div>
+ </div>
+ </div>
+ <script>
+    $(document).ready(function(){
+        $("#add").submit(function(){
+                var options = {
+                    target : '#output1',
+                    dataType : 'json',
+                    success:function(data){
+                        if(data){
+                            var d = dialog({
+                                content: '恭喜，保存成功咯;-)'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+                                //parent.$.fancybox.close();
+                                //关闭浏览器窗口
+                                parent.location.reload();
+                                  
+                                    
+                            }, 2000);
+                            
+                        }
+                        else {
+                            var d = dialog({
+                                content: '哎呀，保存失败啦-_-!'
+                            });
+                            d.show();
+                            setTimeout(function () {
+                                d.close().remove();
+
+                            }, 2000);
+                        }
+                    }
+                }
+                $(this).ajaxSubmit(options);  
+               return false; //阻止表单默认提交  
+            });
+
+});
+
+</script>
+</body>
+</html>
